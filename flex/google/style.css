@@ -1,0 +1,81 @@
+.main{
+    background: rgb(255,255,255);
+    background: linear-gradient(220deg, rgba(255,255,255,1) 0%, rgba(225,225,235,1) 58%, rgb(150, 204, 235) 100%);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.container{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid linear-gradient(220deg, rgba(255,255,255,1) 0%, rgba(225,225,235,1) 58%, rgb(150, 204, 235) 100%);
+    border-radius: 25px;
+    background: rgb(255,255,255);
+    background: linear-gradient(220deg, rgba(255,255,255,1) 0%, rgba(225,225,235,1) 58%, rgb(150, 204, 235) 100%);
+    width: 270px;
+    height: 400px;
+    box-shadow: rgba(81, 137, 227, 0.25) 0px 50px 100px -20px, rgba(6, 0, 71, 0.3) 0px 30px 60px -30px;
+
+    column-gap: 12px;
+    row-gap: 12px;
+}
+
+.social img{
+    row-gap: 12px;
+    column-gap: 5px;
+    margin: 5px;
+}
+
+.icons{
+    height: 20px;
+    width: 20px;
+}
+.icon{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin-bottom: 0px;
+}
+.google{
+    height: 80px;
+    width: 80px;
+
+}
+
+.name{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0px;
+    padding: 0px;
+}
+
+.name p{
+    margin-top: 0px;
+}
+
+.name h2{
+    margin: 0px;
+}
+
+.button{
+    margin-top: 30px;
+    background-color: white;
+    border-radius: 20px;
+    height: 30px;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button a{
+    text-decoration: none;
+    color: black;
+}
