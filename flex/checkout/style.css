@@ -1,0 +1,292 @@
+.main{
+    width: 100%;
+    height: 45px;
+}
+.navbar{
+    height: 44px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 40px;
+    margin-right: 0px;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.menu, .sign, .item, .image{
+    display: flex;
+    flex-direction: row;
+}
+
+.menu a{
+    text-decoration: none;
+    color: black;
+}
+
+.menu{
+    width: 40%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+
+.sign{
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.account{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80px;
+}
+.item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80px;
+}
+
+.image{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100px;
+}
+/* end of navigation bar */
+
+/* start of body */
+.content{
+    border-top: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 470px;
+    margin-top: 0px;
+}
+
+.tim{
+    color: rgb(123,175,223);
+}
+
+.chek{
+    margin-right: 0px;
+    width: 390px;
+    margin-left: 350px;
+    margin-top: -45px;
+    margin-bottom: 12px;
+
+}
+
+.one{
+    background-color: rgb(247,250,252);
+    width: 60%;
+    height: 450px;
+    margin: 30px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 0px;
+}
+.two{
+    background-color: rgb(247,250,252);
+    width: 30%;
+    height: 450px;
+    margin: 30px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 35px;
+    margin-bottom: 0px;
+}
+
+.top{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+}
+
+.top p, img{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.middle{
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-left: 350px;
+}
+
+.email, .password{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.email input, .password input{
+    height: 40px;
+    width: 390px;
+    border-radius: 5px;
+    border: 1px solid rgb(226,232,240);
+    background-color: rgb(226,232,240);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.buttons{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 390px;
+    margin-top: 30px;
+}
+
+.button1{
+    text-decoration: none;
+    color: rgb(98,108,125);
+}
+
+.button2{
+    width: 120px;
+    background-color: rgb(49,130,206);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    height: 50px;
+}
+
+.button2 {
+    color: white;
+    margin-left: 20px;
+    text-decoration: none;
+}
+
+
+.bottom{
+    border-top: 1px solid rgb(235,240,246);
+    height: 80px;
+    margin-top: 50px;
+    width: 390px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: row;
+}
+
+.button3, .button4{
+    margin-left: 20px;
+    margin-top: 30px;
+}
+
+.button3{
+    text-decoration: none;
+    color: rgb(98,108,125);
+}
+.button4{
+    width: 150px;
+    background-color: rgb(49,130,206);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    height: 50px;
+    text-decoration: none;
+    color: white;
+}
+
+.order{
+    width: 330px;
+    display: flex;
+    flex-direction: column;
+}
+.dep{
+    width: 330px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.symbol{
+    background-color: rgb(226,232,240);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 20px;
+}
+
+.text{
+    margin-top: -10px;
+
+}
+
+#number{
+    margin-top: -30px;
+}
+
+.split{
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    justify-content:left;
+    align-items: flex-start;
+
+}
+#imput{
+    height: 40px;
+    border-radius: 10px;
+    background-color: rgb(226,232,240);
+    border: 1px solid rgb(226,232,240);
+    margin-right: 10px;
+    margin-top: 5px;
+}
+
+.forms{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width:330px;
+
+
+}
+
+.forms a{
+
+    width: 100px;
+    height: 42px;
+    background-color: white ;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: black;
+    margin-top: 23px;
+    border: 2px solid rgb(49,130,206);
+}
+
+.to{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0px;
+    padding: 0px;
+    height: 40px;
+}
