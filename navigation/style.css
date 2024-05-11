@@ -1,0 +1,139 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+.navbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-top: 30px;
+    height: 30px;
+}
+
+.left{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 640px;
+}
+
+.right{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    width: 640px;
+}
+
+.menu{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    width: 560px;
+}
+
+.login{
+    margin-left: 400px;
+}
+
+.register{
+    margin-right: 50px;
+    border: 1px solid black;
+    height: 30px;
+    border-radius: 10px;
+    width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo{
+    margin-left: 50px;
+    width: 50px;
+    height: 30px;
+}
+
+#select{
+    border: none;
+    background-color: white;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+/* container */
+.container{
+    width: 1200px;
+    margin-left: 50px;
+    margin-right: 50px;
+    height: 480px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.image{
+    width: 600px;
+    height: 450px;
+    margin-left: 100px;
+}
+.content{
+    width:600px ;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+img{
+    width: 350px;
+    height: 450px;
+}
+
+.content h1{
+    height: 180px;
+    font-size: 70px;
+}
+
+.content p{
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.content a{
+    background-color: black;
+    width: 100px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    color: white;
+    justify-content: center;
+    border-radius: 15px;
+    margin-bottom: 20px;
+
+
+}
+.icons{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+.icons p{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.iconic{
+    width: 90px;
+    height: 30px;
+}
