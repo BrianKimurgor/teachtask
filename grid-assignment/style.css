@@ -1,0 +1,243 @@
+/* main overal page */
+.main{
+    background-color: rgb(236,242,247);
+    height: 550px;
+    width: 1270px;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    place-items: center;
+    justify-items: center;
+}
+/* left side of page */
+.left{
+    height: 480px;
+    width: 900px;
+    border-radius: 10px;
+    display: grid;
+    grid-template-rows: 2fr 2fr;
+    place-items: center;
+    justify-items: center;
+}
+
+/* right side of page */
+.right{
+    height: 487px;
+    width: 300px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+/* styling left side */
+/* top */
+.top{
+    height: 230px;
+    width: 900px;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    margin-bottom: 10px;
+}
+
+/* bottom */
+.bottom{
+    display: grid;
+    height: 230px;
+    width: 900px;
+    grid-template-columns: 3fr 1fr;
+}
+
+/* styling the topside */
+/* big */
+.big{
+    width: 550px;
+    height: 230px;
+    border-radius: 10px;
+    background-color: rgb(115,63,199);
+}
+
+/* small */
+.small{
+    width: 320px;
+    background-color: rgb(73,85,106);
+    border-radius: 10px;
+}
+
+/* styling the bottom side */
+/* smaller */
+.smaller{
+    width: 320px;
+    background-color: rgb(250, 250, 250);
+    border-radius: 10px;
+    height: 240px;
+}
+
+/* bigger */
+.bigger{
+    width: 550px;
+    height: 240px;
+    border-radius: 10px;
+    background-color: rgb(25,32,46);
+}
+/* styling the left top big */
+/* bio1 */
+.bio1{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    place-items: center;
+    justify-items: center;
+}
+
+.bio1 img{
+    width: 40px;
+    height: 40px;
+    border-radius: 30px;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.info1{
+    width: 480px;
+    height: 70px;
+    display: grid;
+
+}
+
+.info1 h3{
+    margin-bottom: 0px;
+    color: white;
+}
+
+.info1 p{
+    margin-top: 0px;
+    color: white;
+}
+
+/* text1 */
+.text1{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    height: 160px;
+}
+
+.header1{
+    height: 80px;
+    display: grid;
+    margin-top: -20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.header1 h4, .para1 p{
+    color: white;
+}
+
+.para1{
+    height: 80px;
+    margin-left: 20px;
+    margin-top: -20px;
+    margin-right: 20px;
+}
+
+
+/* styling the small grids */
+.bio2{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    place-items: center;
+    justify-items: center;
+    width: 320px;
+    height: 70px;
+}
+
+.bio2 img{
+    width: 40px;
+    height: 40px;
+    border-radius: 30px;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.info2{
+    height: 70px;
+    width: 245px;
+}
+
+.info2 h3{
+    margin-bottom: 0px;
+    color: white;
+}
+
+.info2 p{
+    margin-top: 0px;
+    color: white;
+}
+/* text2 */
+.text2{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    height: 160px;
+}
+
+.header2{
+    height: 80px;
+    display: grid;
+    margin-top: -20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.para2{
+    height: 80px;
+    margin-left: 20px;
+    margin-top: -20px;
+    margin-right: 20px;
+}
+
+.header2 h4{
+    margin-bottom: 0px;
+}
+.para2 p{
+    margin-top: 0px;
+}
+
+
+/* styling the right side */
+/* right */
+.right{
+    width: 300px;
+    height: 487px;
+}
+/* bios */
+.bios{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    place-items: center;
+    justify-items: center;
+    width: 300px;
+    height: 70px;
+}
+
+.bios img{
+    width: 40px;
+    height: 40px;
+    border-radius: 30px;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.infos{
+    width: 220px;
+}
+
+.infos h3{
+    margin-bottom: 0px;
+}
+.infos p{
+    margin-top: 0px;
+}
+
+.texts{
+    width: 250px;
+    height: 417px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
