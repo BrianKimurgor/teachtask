@@ -97,10 +97,10 @@ Sample Data: dog
 Expected Output: ["d", "do", "dog", "o", "og", "g"]
 */
 
-function subsets(str){
-  let subset =[];
-  for (let i = 0; i <= str.length; i++){
-    for(let j = i + 1; j <= str.length; j++){
+function subsets(str) {
+  let subset = [];
+  for (let i = 0; i <= str.length; i++) {
+    for (let j = i + 1; j <= str.length; j++) {
       subset.push(str.slice(i, j))
     }
   }
@@ -147,26 +147,26 @@ Expected Output:
 */
 var library = [
   {
-      title:  'The Road Ahead',
-      author: 'Bill Gates',
-      libraryID: 1254
+    title: 'The Road Ahead',
+    author: 'Bill Gates',
+    libraryID: 1254
   },
   {
-      title: 'Walter Isaacson',
-      author: 'Steve Jobs',
-      libraryID: 4264
+    title: 'Walter Isaacson',
+    author: 'Steve Jobs',
+    libraryID: 4264
   },
   {
-      title: 'Mockingjay: The Final Book of The Hunger Games',
-      author: 'Suzanne Collins',
-      libraryID: 3245
+    title: 'Mockingjay: The Final Book of The Hunger Games',
+    author: 'Suzanne Collins',
+    libraryID: 3245
   }];
-  library.sort(
-    function(a,b){
-      return a.libraryID - b.libraryID
-    }
-  );
-  console.log(library)
+library.sort(
+  function (a, b) {
+    return a.libraryID - b.libraryID
+  }
+);
+console.log(library)
 
 /**
 11. Write a JavaScript function to print all the methods in a JavaScript object.
@@ -175,9 +175,9 @@ console.log(all_properties(Array));
 ["length", "name", "arguments", "caller", "prototype", "isArray", "observe", "unobserve"]
 */
 
-function all_properties(val){
+function all_properties(val) {
   let arr = [];
-  for(let i = 0; i <= val.length; i++){
+  for (let i = 0; i <= val.length; i++) {
     arr.push(i)
   }
   return arr
@@ -219,11 +219,11 @@ console.log(parsedURL);
 13. Write a JavaScript function to retrieve all the names of an object's own and inherited properties.
 */
 
-function getProperty(obj){
+function getProperty(obj) {
   let propertyName = [];
   propertyName = propertyName.concat(Object.getOwnPropertyNames(obj))
   let prototype = Object.getPrototypeOf(obj);
-  while(prototype != null){
+  while (prototype != null) {
     propertyName = propertyName.concat(Object.getOwnPropertyNames(prototype));
     prototype = Object.getPrototypeOf(prototype);
   }
@@ -276,6 +276,19 @@ console.log(value);
 
 /**
 16. Write a JavaScript function to get a copy of the object where the keys become the values and the values are the keys.
+*/
+function reverse(obj) {
+  let reversedObj = [];
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      reversedObj[obj[key]] = key
+    }
+  }
+  return reversedObj;
+}
 /**
 17. Write a JavaScript function to check whether an object contains a given property.
  */
+function checkProperty(obj, property) {
+  return obj.hasOwnProperty(property);
+}
