@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+        integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<style>
+    body,
+    .jumbotron {
+        padding: 30px
+    }
+
+    .text-giant {
+        font-size: 40px
+    }
+</style>
+
+<body>
+
+    <div class="jumbotron">
+        <h2>How much do pies costs</h2>
+        <form>
+
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="text" class="form-control" name="price" placeholder="price" value="20" id="price">
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">Quantity</label>
+                <span class="label label-primary quantity-label">1</span>
+                <input type="number" class="form-control" name="quantity" placeholder="quantity" value="1" id="quantity">
+                <!-- <input type="range" class="form-control" name="quantity" placeholder="quantity" value="1" min="1"
+                    max="10" step="1"> -->
+            </div>
+        </form>
+
+        <div class="text-right text-giant total" id="result">
+            $30
+        </div>
+
+    </div>
+
+
+    <script>
+        const price = document.getElementById('price').value
+        const range =  document.getElementById('quantity').value
+        const result = document.getElementById('result')
+
+        const calculation = () => {
+            const total = price * range;
+            result.textContent = `$${total}`
+        }
+            result.addEventListener('mouseenter', calculation)
+
+    </script>
+
+</body>
+
+</html>
