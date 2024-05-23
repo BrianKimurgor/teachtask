@@ -1,0 +1,40 @@
+main {
+    background-color: rgb(240, 240, 242);
+    /* width: 100vw;
+    height: 100vh; */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr ;
+}
+
+div{
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: rgb(240, 240, 240);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 5px;
+    width: 350px;
+}
+
+p{
+    margin: 0;
+    padding: 0;
+    margin-top: 2px;
+}
+
+btn{
+    background-color: blue;
+    width: 100px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+}
+
+img{
+    width: 350px;
+    height: 200px;
+}
