@@ -22,22 +22,7 @@ const request = async ()  => {
 }
 // request()
 
-const getThem = async () => {
-    try {
-        const query = search.value;
 
-        const response = await octokit.request('GET /users/{username}', {
-            username: query,
-            headers: {
-              'X-GitHub-Api-Version': '2022-11-28'
-            }
-          })
-          resultContainer.innerHTML = JSON.stringify(response.data);
-          console.log(responce.data)
-    } catch (error) {
-        console.log(error)
-    }
-}
 //  getThem()
 
 
