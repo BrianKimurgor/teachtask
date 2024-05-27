@@ -26,7 +26,7 @@ const getThem = async () => {
     try {
         const query = search.value;
         const octokit = new Octokit({
-            auth: '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'
+
           })
 
         const response = await octokit.request('GET /users/{username}', {
