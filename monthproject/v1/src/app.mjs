@@ -1,8 +1,10 @@
 import express from "express"
-import {readFile} from "node:fs/promises"
+import { readFile } from "node:fs/promises"
 import { fileURLToPath } from "node:url"
 import path from "node:path"
 import { isUtf8 } from "node:buffer"
+import { query, validationResult, matchedData, body, checkSchema } from "express-validator";
+import { validationSchema } from '../utils/validationSchema.mjs'
 
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -13,122 +15,147 @@ const dataset = JSON.parse(data)
 
 //console.log(data)
 
+//middleware
+const middleware = (req, res, next) => {
+    console.log(`${req.method} ${req.url}`);
+    next()
+}
+
+const resolveUserByIndex = (req, res, next) => {
+    const { body, params: { id }, query: { filter, value } } = req
+    const parseId = parseInt(id)
+    if (isNaN(parseId)) return res.sendStatus(400);
+
+    const findIndex = dataset.findIndex((user) => {
+        return user.id === parseId;
+    })
+
+    const newUser = { id: dataset[dataset.length - 1].id + 1, ...body }
+        dataset.push(newUser)
+
+
+    if (filter && value)
+        return res.send(dataset.filter(user => user[filter].includes(value)))
+
+    if (findIndex === -1) return res.sendStatus(404)
+
+    req.findIndex = findIndex
+
+    next()
+}
+
 
 const app = express()
 app.use(express.json())
+app.use(middleware)
 
 //GET
-app.get('/', (req, res) =>{
-    res.send(dataset)
-})
+app.get('/',
+    checkSchema(validationSchema),
+    (req, res) => {
+        res.send(dataset)
+    })
 
 //getting all users
-app.get('/api/users', (req, res) => {
-    res.send(dataset)
-})
+app.get('/api/users',
+    checkSchema(validationSchema),
+    (req, res) => {
+        res.send(dataset)
+    })
 
 
 //getting user per id
-app.get('/api/users/:id', (req,res) =>{
-    const parseId = parseInt(req.params.id)//converting a string to an integer
-
-    if(isNaN(parseId))
-        return res.status(400).send({message: "this is an invalid ID"})
-
-    const findUser = dataset.find((user) => user.id === parseId)//finding user that matches tha parseID
-
-    if(!findUser)
-        res.sendStatus(400)
-
-    res.send(findUser)
-})
+app.get('/api/users/:id',
+    checkSchema(validationSchema),
+    (req, res) => {
+        const { findIndex } = req
+        res.status(200).send(dataset[findIndex])
+    })
 
 
 //query parameters
-app.get('/api/users', (req, res) =>{
-    //filtering data by username and value
-    const {query: {filter, value}} = req
-
-    if(filter && value)
-        return res.send(dataset.filter(user => user[filter].includes(value)))
-
-    return res.send(dataset)
-})
+app.get('/api/users',
+    checkSchema(validationSchema),
+    resolveUserByIndex,
+    (req, res) => {
+       const { query } = req
+        return res.send(dataset[query])
+    })
 
 
 //POST
-app.post('/api/users', (req,res) =>{
-    const {body} = req
-    const newUser = {id: dataset[dataset.length - 1].id + 1, ...body }
-    dataset.push(newUser)
+app.post('/api/users',
+    checkSchema(validationSchema),
+    (req, res) => {
+        const errors = validationResult(req)
+            if(!errors.isEmpty()) {
+                return res.status(400).json({errors: errors.array()})
+            }
+            const data = matchedData(req)
+            const new_user = {id: dataset[dataset.length -1].id + 1 , ...data}
+            dataset.push(new_user)
 
-    return res.status(201).send(newUser)
-})
+            return res.status(200).send(new_user)
+    })
 
 
 //PATCH
-app.patch('/api/users/:id', (req, res) =>{
-    const {body, params: {id}} = req
+app.patch('/api/users/:id',
+    checkSchema(validationSchema), (req, res) => {
+        const { body, params: { id } } = req
 
-    const parseId = parseInt(id)
-    if(isNaN(parseId))
-        return res.sendStatus(400)
+        const parseId = parseInt(id)
+        if (isNaN(parseId))
+            return res.sendStatus(400)
 
-    const findIndex = dataset.findIndex((user) =>{
-        return user.id === parseId
+        const findIndex = dataset.findIndex((user) => {
+            return user.id === parseId
+        })
+
+        if (findIndex === -1)
+            return res.sendStatus(404)
+
+        dataset[findIndex] = { ...dataset[findIndex], ...body }
+        console.log('user updated')
+        return res.sendStatus(200)
     })
-
-    if(findIndex === -1)
-        return res.sendStatus(404)
-
-    dataset[findIndex] = { ...dataset[findIndex], ...body}
-    console.log('user updated')
-    return res.sendStatus(200)
-})
 
 
 //PUT
-app.put('/api/users/:id', (req, res) =>{
-    const {body, params: {id}} = req
+app.put('/api/users/:id',
+    checkSchema(validationSchema),
+    resolveUserByIndex,
+    (req, res) => {
+        const { body, params: { id } } = req
 
-    const parseId = parseInt(id)
-    if(isNaN(parseId))
-        return res.sendStatus(400)
+        const parseId = parseInt(id)
+        if (isNaN(parseId))
+            return res.sendStatus(400)
 
-    const findIndex = dataset.findIndex((user) => {
-        return user.id === parseId
+        const findIndex = dataset.findIndex((user) => {
+            return user.id === parseId
+        })
+
+        if (findIndex === -1)
+            return res.sendStatus(404)
+
+        dataset[findIndex] = { id: parseId, ...body }
+        res.sendStatus(200)
     })
-
-    if(findIndex === -1)
-        return res.sendStatus(404)
-
-    dataset[findIndex] = {id: parseId, ...body }
-    res.sendStatus(200)
-})
 
 
 //DELETE
-app.delete('/api/users/:id', (req, res) => {
-    //from the request object destructure the object body and params
-    const { params: {id}}  = req
-
-    const parseId = parseInt(id)
-    if(isNaN(parseId))
-        return res.sendStatus(400)
-
-    const findIndex = dataset.findIndex((user) => {
-        return user.id === parseId
+app.delete('/api/users/:id',
+    checkSchema(validationSchema),
+    resolveUserByIndex,
+    (req, res) => {
+        const { findIndex } = req
+        dataset.splice(findIndex, 1)
+        res.sendStatus(200)
     })
-
-    if(findIndex === -1)
-        return res.sendStatus(404)
-
-    dataset.splice(findIndex, 1)
-    res.sendStatus(200)
-})
 
 
 const PORT = process.env.PORT || 3000
-app.listen(PORT, () =>{
+app.listen(PORT, () => {
     console.log(`server running on port ${PORT}`)
 })
