@@ -5,6 +5,7 @@ import path from "node:path"
 import { isUtf8 } from "node:buffer"
 import { query, validationResult, matchedData, body, checkSchema } from "express-validator";
 import { validationSchema } from '../utils/validationSchema.mjs'
+import fs from 'fs/promises'
 
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -14,6 +15,10 @@ const data = await readFile(path.join(__dirname, "eventsData.json"), "utf-8")
 const dataset = JSON.parse(data)
 
 //console.log(data)
+async function writeDataToFile(data) {
+    const jsonData = JSON.stringify(data, null, 2); // Stringify with indentation
+    await fs.writeFile(path.join(__dirname, "eventsData.json"), jsonData);
+  }
 
 //middleware
 const middleware = (req, res, next) => {
@@ -86,7 +91,7 @@ app.get('/api/users',
 //POST
 app.post('/api/users',
     checkSchema(validationSchema),
-    (req, res) => {
+    async (req, res) => {
         const errors = validationResult(req)
             if(!errors.isEmpty()) {
                 return res.status(400).json({errors: errors.array()})
@@ -94,14 +99,15 @@ app.post('/api/users',
             const data = matchedData(req)
             const new_user = {id: dataset[dataset.length -1].id + 1 , ...data}
             dataset.push(new_user)
-
+            await writeDataToFile(dataset);
             return res.status(200).send(new_user)
     })
 
 
 //PATCH
 app.patch('/api/users/:id',
-    checkSchema(validationSchema), (req, res) => {
+    checkSchema(validationSchema),
+    async (req, res) => {
         const { body, params: { id } } = req
 
         const parseId = parseInt(id)
@@ -117,6 +123,7 @@ app.patch('/api/users/:id',
 
         dataset[findIndex] = { ...dataset[findIndex], ...body }
         console.log('user updated')
+        await writeDataToFile(dataset);
         return res.sendStatus(200)
     })
 
@@ -125,7 +132,7 @@ app.patch('/api/users/:id',
 app.put('/api/users/:id',
     checkSchema(validationSchema),
     resolveUserByIndex,
-    (req, res) => {
+    async (req, res) => {
         const { body, params: { id } } = req
 
         const parseId = parseInt(id)
@@ -140,6 +147,7 @@ app.put('/api/users/:id',
             return res.sendStatus(404)
 
         dataset[findIndex] = { id: parseId, ...body }
+        await writeDataToFile(dataset);
         res.sendStatus(200)
     })
 
@@ -148,9 +156,10 @@ app.put('/api/users/:id',
 app.delete('/api/users/:id',
     checkSchema(validationSchema),
     resolveUserByIndex,
-    (req, res) => {
+    async (req, res) => {
         const { findIndex } = req
         dataset.splice(findIndex, 1)
+        await writeDataToFile(dataset);
         res.sendStatus(200)
     })
 
