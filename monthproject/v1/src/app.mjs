@@ -15,8 +15,8 @@ const data = await readFile(path.join(__dirname, "eventsData.json"), "utf-8")
 const dataset = JSON.parse(data)
 
 //console.log(data)
-async function writeDataToFile(data) {
-    const jsonData = JSON.stringify(data, null, 2); // Stringify with indentation
+async function createEvent(data) {
+    const jsonData = JSON.stringify(data, null, 2);
     await fs.writeFile(path.join(__dirname, "eventsData.json"), jsonData);
   }
 
@@ -73,8 +73,14 @@ app.get('/api/users',
 app.get('/api/users/:id',
     checkSchema(validationSchema),
     (req, res) => {
-        const { findIndex } = req
-        res.status(200).send(dataset[findIndex])
+        const userId = parseInt(req.params.id);
+        const findIndex =dataset.findIndex(user => user.id === userId)
+
+        if(findIndex !== -1){
+            res.status(200).send(dataset[findIndex]);
+        }else{
+            res.status(404).send('User not found');
+        }
     })
 
 
@@ -99,7 +105,7 @@ app.post('/api/users',
             const data = matchedData(req)
             const new_user = {id: dataset[dataset.length -1].id + 1 , ...data}
             dataset.push(new_user)
-            await writeDataToFile(dataset);
+            await createEvent(dataset);
             return res.status(200).send(new_user)
     })
 
@@ -123,7 +129,7 @@ app.patch('/api/users/:id',
 
         dataset[findIndex] = { ...dataset[findIndex], ...body }
         console.log('user updated')
-        await writeDataToFile(dataset);
+        await createEvent(dataset);
         return res.sendStatus(200)
     })
 
@@ -147,7 +153,7 @@ app.put('/api/users/:id',
             return res.sendStatus(404)
 
         dataset[findIndex] = { id: parseId, ...body }
-        await writeDataToFile(dataset);
+        await createEvent(dataset);
         res.sendStatus(200)
     })
 
@@ -159,7 +165,7 @@ app.delete('/api/users/:id',
     async (req, res) => {
         const { findIndex } = req
         dataset.splice(findIndex, 1)
-        await writeDataToFile(dataset);
+        await createEvent(dataset);
         res.sendStatus(200)
     })
 
