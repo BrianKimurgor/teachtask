@@ -1,76 +1,29 @@
-import express from "express"
-import { readFile } from "node:fs/promises"
-import { fileURLToPath } from "node:url"
-import path from "node:path"
-import { isUtf8 } from "node:buffer"
-import { query, validationResult, matchedData, body, checkSchema } from "express-validator";
-import { validationSchema } from '../utils/validationSchema.mjs'
-import fs from 'fs/promises'
+import { readFile } from "node:fs/promises";
+import { validationSchema } from "../utils/validationSchema.mjs";
+import { userData } from "../utils/database/eventsData.js"
+import { checkSchema } from "express-validator";
 
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+const dataset = userData
+console.log(dataset)
 
 
-const data = await readFile(path.join(__dirname, "eventsData.json"), "utf-8")
-const dataset = JSON.parse(data)
-
-//console.log(data)
-async function createEvent(data) {
-    const jsonData = JSON.stringify(data, null, 2);
-    await fs.writeFile(path.join(__dirname, "eventsData.json"), jsonData);
-  }
-
-//middleware
-const middleware = (req, res, next) => {
-    console.log(`${req.method} ${req.url}`);
-    next()
-}
-
-const resolveUserByIndex = (req, res, next) => {
-    const { body, params: { id }, query: { filter, value } } = req
-    const parseId = parseInt(id)
-    if (isNaN(parseId)) return res.sendStatus(400);
-
-    const findIndex = dataset.findIndex((user) => {
-        return user.id === parseId;
-    })
-
-    const newUser = { id: dataset[dataset.length - 1].id + 1, ...body }
-        dataset.push(newUser)
-
-
-    if (filter && value)
-        return res.send(dataset.filter(user => user[filter].includes(value)))
-
-    if (findIndex === -1) return res.sendStatus(404)
-
-    req.findIndex = findIndex
-
-    next()
-}
-
-
-const app = express()
-app.use(express.json())
-app.use(middleware)
-
+// async function createEvent(data) {
+//     const jsonData = JSON.stringify(data, null, 2);
+//     await fs.writeFile(path.join(__dirname, "eventsData.json"), jsonData);
+//   }
 //GET
-app.get('/',
+export const getUsers = (req, res) => {('/api/users',
     checkSchema(validationSchema),
     (req, res) => {
         res.send(dataset)
+        console.log(dataset)
     })
-
-//getting all users
-app.get('/api/users',
-    checkSchema(validationSchema),
-    (req, res) => {
-        res.send(dataset)
-    })
-
+}
 
 //getting user per id
-app.get('/api/users/:id',
+export const getUserById = (req, res) => {('/api/users/:id',
     checkSchema(validationSchema),
     (req, res) => {
         const userId = parseInt(req.params.id);
@@ -82,10 +35,10 @@ app.get('/api/users/:id',
             res.status(404).send('User not found');
         }
     })
-
+}
 
 //query parameters
-app.get('/api/users',
+export const getUsersByQuery = (req, res) => {('/api/users',
     checkSchema(validationSchema),
     resolveUserByIndex,
     (req, res) => {
@@ -102,11 +55,12 @@ app.get('/api/users',
             return res.status(400).send('Bad Request: Missing username parameter');
         }
     }
-);
+)
+}
 
 
 //POST
-app.post('/api/users',
+export const createUser =(req, res) => {('/api/users',
     checkSchema(validationSchema),
     async (req, res) => {
         const errors = validationResult(req)
@@ -119,10 +73,10 @@ app.post('/api/users',
             await createEvent(dataset);
             return res.status(200).send(new_user)
     })
-
+}
 
 //PATCH
-app.patch('/api/users/:id',
+export const patchUser = (req, res) => {('/api/users/:id',
     checkSchema(validationSchema),
     async (req, res) => {
         const { body, params: { id } } = req
@@ -143,10 +97,10 @@ app.patch('/api/users/:id',
         await createEvent(dataset);
         return res.sendStatus(200)
     })
-
+}
 
 //PUT
-app.put('/api/users/:id',
+export const putUser = (req, res) => {('/api/users/:id',
     checkSchema(validationSchema),
     resolveUserByIndex,
     async (req, res) => {
@@ -167,10 +121,10 @@ app.put('/api/users/:id',
         await createEvent(dataset);
         res.sendStatus(200)
     })
-
+}
 
 //DELETE
-app.delete('/api/users/:id',
+export const deleteUser = (req, res) => {('/api/users/:id',
     checkSchema(validationSchema),
     resolveUserByIndex,
     async (req, res) => {
@@ -179,9 +133,12 @@ app.delete('/api/users/:id',
         await createEvent(dataset);
         res.sendStatus(200)
     })
+}
 
-
-const PORT = process.env.PORT || 3000
-app.listen(PORT, () => {
-    console.log(`server running on port ${PORT}`)
-})
+export default {
+    getUsers,
+    getUserById,
+    getUsersByQuery,
+    createUser,
+    patchUser,
+  }
