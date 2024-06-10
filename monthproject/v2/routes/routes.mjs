@@ -1,31 +1,30 @@
 import express from "express";
-import {
-  getUsers,
-  getUserById,
-  getUsersByQuery,
-  createUser,
-  patchUser,
-} from "../controllers/userController.mjs";
-import { loggingMiddleware } from "../middlewares/loggingMiddleware.mjs";
-import { checkSchema, validationResult } from "express-validator";
+import { userController } from "../controllers/userController.mjs";
+import { resolveUserByIndex } from "../middlewares/resolveuser.mjs";
+import { checkSchema } from "express-validator";
 import { validationSchema } from "../utils/validationSchema.mjs";
-import resolveUserByIndex from "../middlewares/resolveuser.mjs";
 
 const router = express.Router();
 
-// getting users
-router.get("/", resolveUserByIndex, getUsers);
+// GET users
+router.get("/users", userController.getUsers);
 
-// getting users by id
-router.get("/:id", getUserById);
+// GET user by ID
+router.get("/users/:id", resolveUserByIndex,userController.getUserById);
 
-// getting users based on query parameters
-router.get("/", checkSchema(validationSchema), getUsersByQuery);
+// GET users by query
+router.get("/users", userController.getUsersByQuery);
 
-// POST
-router.post("/", checkSchema(validationSchema), createUser);
+// POST create new user
+router.post("/users", checkSchema(validationSchema), userController.createUser);
 
-// PATCH
-router.patch("/:id", checkSchema(validationSchema), patchUser);
+// PATCH update user partially
+router.patch("/users/:id", checkSchema(validationSchema), resolveUserByIndex, userController.patchUser);
+
+// PUT update user fully
+router.put("/users/:id", checkSchema(validationSchema), resolveUserByIndex, userController.putUser);
+
+// DELETE user
+router.delete("/users/:id", checkSchema(validationSchema), resolveUserByIndex, userController.deleteUser);
 
 export default router;
