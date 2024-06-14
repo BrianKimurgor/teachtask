@@ -4,6 +4,7 @@ import { resolveUserByIndex } from "../middlewares/resolveuser.mjs";
 import { checkSchema } from "express-validator";
 import { validationSchema } from "../utils/validationSchema.mjs";
 
+
 const router = express.Router();
 
 // GET users
