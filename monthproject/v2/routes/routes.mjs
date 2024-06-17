@@ -4,6 +4,23 @@ import { resolveUserByIndex } from "../middlewares/resolveuser.mjs";
 import { checkSchema } from "express-validator";
 import { validationSchema } from "../utils/validationSchema.mjs";
 import cookieMiddleware from "../middlewares/cookieMiddleWare.mjs";
+import bodyParser from 'body-parser';
+import { PrismaClient } from '@prisma/client';
+
+const app = express();
+const prisma = new PrismaClient();
+
+// Test the database connection
+prisma.$connect()
+    .then(() => {
+        console.log("Database connected");
+    })
+    .catch((error) => {
+        console.error("Error connecting to database:", error);
+    });
+
+app.use(bodyParser.json());
+
 
 const router = express.Router();
 
