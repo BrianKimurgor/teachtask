@@ -3,15 +3,15 @@ import { userController } from "../controllers/userController.mjs";
 import { resolveUserByIndex } from "../middlewares/resolveuser.mjs";
 import { checkSchema } from "express-validator";
 import { validationSchema } from "../utils/validationSchema.mjs";
-
+import cookieMiddleware from "../middlewares/cookieMiddleWare.mjs";
 
 const router = express.Router();
 
 // GET users
-router.get("/users", userController.getUsers);
+router.get("/users",cookieMiddleware, userController.getUsers);
 
 // GET user by ID
-router.get("/users/:id", resolveUserByIndex,userController.getUserById);
+router.get("/users/:id",cookieMiddleware, resolveUserByIndex,userController.getUserById);
 
 // GET users by query
 router.get("/users", userController.getUsersByQuery);

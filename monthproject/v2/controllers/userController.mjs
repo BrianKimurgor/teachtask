@@ -1,83 +1,142 @@
 import { checkSchema, validationResult, matchedData } from "express-validator";
-import { userData as dataset } from "../utils/database/eventsData.js";
-// import { createEvent } from "../utils/database.js"; // Assuming this function exists for handling events
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 // GET all users
-export const getUsers = (req, res) => {
-    res.status(200).json({
-        status: 'success',
-        data: { userData: dataset }
+export const getUsers = async (req, res) => {
+    try {
+        console.log("users");
+        const allUsers = await prisma.user.findMany({
+            include: {
+                username: true,
+                displayname: true,
+            }
     });
+    console.dir(allUsers, {depth: null})
+        res.json(allUsers);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 };
 
 // GET user by ID
-export const getUserById = (req, res) => {
-    const findIndex = req.findIndex
-    //res.status(200).send(dataset[findIndex])
+export const getUserById = async (req, res) => {
+    const userId = parseInt(req.params.id);
+    try {
+        const user = await prisma.user.findUnique({
+            where: { id: userId },
+        });
 
-    if (findIndex !== -1) {
-        res.status(200).send(dataset[findIndex]);
-    } else {
-        res.status(404).send('User not found');
+        if (user) {
+            res.json(user);
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 };
 
 // GET users by query
-export const getUsersByQuery = (req, res) => {
+export const getUsersByQuery = async (req, res) => {
     const { username } = req.query;
 
-    if (username) {
-        const filteredUser = dataset.find(user => user.username === username);
-        if (filteredUser) {
-            return res.send(filteredUser);
+    try {
+        if (username) {
+            const user = await prisma.user.findUnique({
+                where: { username: username },
+            });
+
+            if (user) {
+                res.json(user);
+            } else {
+                res.status(404).json({ error: 'User not found with the provided username' });
+            }
         } else {
-            return res.status(404).send('User not found with the provided username');
+            res.status(400).json({ error: 'Bad Request: Missing username parameter' });
         }
-    } else {
-        return res.status(400).send('Bad Request: Missing username parameter');
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 };
 
 // POST create new user
 export const createUser = async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+    try {
+        const {username, displayname} = req.body
+        const newUser = await prisma.user.create({
+            data: {
+                username,
+                displayname
+            }
+        });
+        console.log(newUser)
+        res.status(201).json(newUser);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
     }
-    const data = matchedData(req);
-    const new_user = { id: dataset[dataset.length - 1].id + 1, ...data };
-    dataset.push(new_user);
-    await createEvent(dataset);
-    return res.status(200).send(new_user);
 };
 
 // PATCH update user partially
 export const patchUser = async (req, res) => {
+    const userId = parseInt(req.params.id);
     const { body } = req;
-    const findIndex = req.findIndex;
 
-    dataset[findIndex] = { ...dataset[findIndex], ...body };
-    console.log('user updated');
-    await createEvent(dataset);
-    return res.sendStatus(200);
+    try {
+        const updatedUser = await prisma.user.update({
+            where: { id: userId },
+            data: body,
+        });
+
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        if (error.code === 'P2025') { // P2025 is the Prisma error code for "Record to update not found."
+            res.status(404).json({ error: 'User not found' });
+        } else {
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    }
 };
 
 // PUT update user fully
 export const putUser = async (req, res) => {
+    const userId = parseInt(req.params.id);
     const { body } = req;
-    const findIndex = req.findIndex;
 
-    dataset[findIndex] = { id: dataset[findIndex].id, ...body };
-    await createEvent(dataset);
-    res.sendStatus(200);
+    try {
+        const updatedUser = await prisma.user.update({
+            where: { id: userId },
+            data: body,
+        });
+
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        if (error.code === 'P2025') {
+            res.status(404).json({ error: 'User not found' });
+        } else {
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    }
 };
 
 // DELETE user
 export const deleteUser = async (req, res) => {
-    const findIndex = req.findIndex;
-    dataset.splice(findIndex, 1);
-    await createEvent(dataset);
-    res.sendStatus(200);
+    const userId = parseInt(req.params.id);
+
+    try {
+        await prisma.user.delete({
+            where: { id: userId },
+        });
+
+        res.status(204).send();
+    } catch (error) {
+        if (error.code === 'P2025') {
+            res.status(404).json({ error: 'User not found' });
+        } else {
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    }
 };
 
 export const userController = {
