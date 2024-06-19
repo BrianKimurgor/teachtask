@@ -8,7 +8,8 @@ export const getUsers = async (req, res) => {
   try {
     console.log('Fetching all users...')
     const allUsers = await prisma.user.findMany()
-    return res.json(allUsers)
+    console.log(allUsers)
+    return res.json()
   } catch (error) {
     console.error('Error fetching all users:', error)
   }
