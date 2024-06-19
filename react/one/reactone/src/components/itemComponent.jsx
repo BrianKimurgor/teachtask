@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 const ItemComponent = ({ item }) => (
     <div>
       <h2>
