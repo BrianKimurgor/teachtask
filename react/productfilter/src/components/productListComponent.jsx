@@ -1,5 +1,5 @@
+/* eslint-disable react/prop-types */
 // ProductListComponent.js
-import React from 'react';
 import ProductComponent from './productComponent';
 const ProductListComponent = ({ products }) => {
   return (

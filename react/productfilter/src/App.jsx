@@ -1,5 +1,5 @@
 // App.js
-import React, { useState } from 'react';
+import { useState } from 'react';
 import FilterComponent from './components/filterComponent';
 import ProductListComponent from './components/productListComponent';
 

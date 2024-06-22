@@ -1,5 +1,5 @@
+/* eslint-disable react/prop-types */
 // FilterComponent.js
-import React from 'react';
 
 const FilterComponent = ({ searchTerm, selectedCategories, onSearchTermChange, onCategoryChange }) => {
   const categories = ['Electronics', 'Clothing', 'Books'];
