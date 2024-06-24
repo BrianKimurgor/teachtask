@@ -33,8 +33,10 @@
   }
 }
 
-.card {
+.Card {
   padding: 2em;
+  box-shadow: inset;
+  border-radius: 20px;
 }
 
 .read-the-docs {
