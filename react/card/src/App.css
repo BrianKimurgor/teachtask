@@ -42,3 +42,21 @@
 .read-the-docs {
   color: #888;
 }
+.Card {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.Cart {
+  margin: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+button {
+  cursor: pointer;
+}
