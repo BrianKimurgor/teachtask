@@ -60,3 +60,12 @@
 button {
   cursor: pointer;
 }
+.homes{
+  display: flex;
+  flex-direction: column;
+
+}
+.main{
+  display: flex;
+  flex-direction: row;
+}

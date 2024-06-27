@@ -4,9 +4,12 @@ import DisplayComponent from "./displayComponent";
 const ProductsComponent = ({ products, addToCart }) => {
     return (
         <>
-            {products.map((product) => (
-                <DisplayComponent key={product.productID} shoe={product} addToCart={addToCart} />
-            ))}
+        <div className="product">
+        {products.map((product) => (
+            <DisplayComponent key={product.productID} shoe={product} addToCart={addToCart} />
+        ))}
+        </div>
+
         </>
     );
 };
